@@ -1,0 +1,2 @@
+# amazeing
+Maze algorithm excecise
