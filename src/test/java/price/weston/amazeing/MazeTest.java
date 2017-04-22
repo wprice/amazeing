@@ -1,5 +1,8 @@
 package price.weston.amazeing;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,19 +18,14 @@ public class MazeTest {
     @Test
     public void testMazeInit() {
         Maze m = new Maze(10, 10);
-        Assert.assertTrue(m.getRows() == 10 && m.getColumns() == 10);
+        assertThat(m, notNullValue());
     }
 
-    @Test
-    public void tesDumpMaze() {
-        Maze m = new Maze(10, 10);
-        m.dumpMaze();
-    }
 
     @Test
     public void testCreateMaze() {
-        Maze m = new Maze(4, 4);
-        m.generateMaze(0, 0);
+        Maze m = new Maze(3, 3);
+        m.generateMaze(2, 0);
         m.dumpMaze();
     }
 }
