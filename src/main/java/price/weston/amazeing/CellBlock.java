@@ -1,5 +1,6 @@
 package price.weston.amazeing;
 
+import javafx.scene.control.Cell;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -7,13 +8,19 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import java.util.*;
 
 /**
- * Created by wprice on 4/21/17.
+ * CellBlock represents a single cell or 'block' of a maze. Note, the play on words :-)
+ *
+ * @see Maze
+ *
+ *
  */
 public class CellBlock {
 
     private int row;
     private int column;
     private Set<CellBlock> connections = new HashSet<>();
+    private boolean entrance;
+    private boolean exit;
 
     public CellBlock(int row, int column) {
         this.row = row;
@@ -29,7 +36,7 @@ public class CellBlock {
         return column;
     }
 
-    public void addConnection(CellBlock cellBlock) {
+    public void addConnection(final CellBlock cellBlock) {
 
         if(!connections.contains(cellBlock)) {
             connections.add(cellBlock);
@@ -38,10 +45,35 @@ public class CellBlock {
 
     }
 
+    public boolean connected(final CellBlock cellBlock) {
+        return (cellBlock != null) ? connections.contains(cellBlock) : false;
+    }
+    public Set<CellBlock> getConnections() {
+        return this.connections;
+    }
+
+    public boolean isEntrance() {
+        return entrance;
+    }
+
+    public void setEntrance(boolean entrance) {
+        this.entrance = entrance;
+    }
+
+    public boolean isExit() {
+        return exit;
+    }
+
+    public void setExit(boolean exit) {
+        this.exit = exit;
+    }
+
+    /**
+     * Note, we exclude the connections field from the equals method as only our coordinates matter
+     */
     @Override
     public boolean equals(Object obj) {
-
-        return EqualsBuilder.reflectionEquals(this, obj);
+        return EqualsBuilder.reflectionEquals(this, obj, "connections");
     }
 
     @Override

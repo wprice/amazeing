@@ -1,9 +1,12 @@
 package price.weston.amazeing;
 
 /**
- * Created by wprice on 4/21/17.
+ * Simple enum to capture directional coordinates
+ *
+ * @see CellBlock
+ * @see Maze
  */
-public enum  Compass {
+public enum Compass {
     NORTH,
     SOUTH,
     EAST,
