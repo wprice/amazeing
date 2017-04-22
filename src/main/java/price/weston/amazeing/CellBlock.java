@@ -1,9 +1,7 @@
 package price.weston.amazeing;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.HashSet;
 import java.util.List;
@@ -21,14 +19,11 @@ public class CellBlock {
     private int row;
     private int column;
     private Set<CellBlock> connections = new HashSet<>();
-    private boolean entrance;
-    private boolean exit;
     private boolean visited;
 
     public CellBlock(int row, int column) {
         this.row = row;
         this.column = column;
-        ReflectionToStringBuilder.setDefaultStyle(ToStringStyle.NO_CLASS_NAME_STYLE);
     }
 
     public int getRow() {
@@ -45,7 +40,6 @@ public class CellBlock {
             connections.add(cellBlock);
             cellBlock.addConnection(this);
         }
-
     }
 
     public boolean connected(int row, int column) {
@@ -58,24 +52,14 @@ public class CellBlock {
     public Set<CellBlock> getConnections() {
         return this.connections;
     }
+
     public List<CellBlock> getNonVisitedConnections() {
         return connections.stream().filter(cellBlock -> !cellBlock.isVisited()).collect(Collectors.toList());
     }
 
-    public boolean isEntrance() {
-        return entrance;
-    }
-
-    public void setEntrance(boolean entrance) {
-        this.entrance = entrance;
-    }
-
-    public boolean isExit() {
-        return exit;
-    }
-
-    public void setExit(boolean exit) {
-        this.exit = exit;
+    public int nonVisitedConnectionsCount() {
+        int count = connections.stream().filter(cellBlock -> !cellBlock.isVisited()).collect(Collectors.toList()).size();
+        return count;
     }
 
     public boolean isVisited() {
@@ -114,8 +98,8 @@ public class CellBlock {
         return ReflectionToStringBuilder.toStringExclude(this, "connections");
     }
 
-    public int nonVisitedConnections() {
-        int count = connections.stream().filter(cellBlock -> !cellBlock.isVisited()).collect(Collectors.toList()).size();
-        return count;
+
+    public int connectionCount() {
+        return connections.size();
     }
 }

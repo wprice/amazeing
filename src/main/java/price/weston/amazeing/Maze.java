@@ -1,6 +1,5 @@
 package price.weston.amazeing;
 
-import com.inamik.text.tables.SimpleTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +17,6 @@ public class Maze {
 
     private static final Logger logger = LoggerFactory.getLogger(Maze.class);
 
-    //TODO break class up into generator, formatter etc
     private int rows;
     private int columns;
     private CellBlock[][] grid;
@@ -33,7 +31,8 @@ public class Maze {
       */
     public Maze(int rows, int columns) {
 
-        //TODO maybe move validation logic to Maze validation routine etc
+        logger.info("Creating maze with {} rows and {} columns", rows, columns);
+
         if(rows <= 0 || columns <= 0) {
             throw new IllegalArgumentException("Row and columns must be greater than zero");
         }
@@ -59,54 +58,6 @@ public class Maze {
 
         entrance = new CellBlock(0, 0);
         exit = new CellBlock(rows - 1, columns - 1);
-    }
-
-    //TODO actually do something reasonable for printing the maze etc
-    public void dumpMaze() {
-
-        String edge = "|";
-        String body = "   ";
-        String bottom = "+";
-
-        StringBuffer header = new StringBuffer("+");
-        for(int i = 0; i < grid.length; i++) {
-          header.append("---+");
-        }
-        System.out.println(header);
-
-        for (int i = 0; i < grid.length; i++) {
-
-            StringBuffer topBuffer = new StringBuffer("|");
-            StringBuffer bottomBuffer = new StringBuffer("+");
-
-            for (int j = 0; j < grid[i].length; j++) {
-
-                if(path.contains(grid[i][j])) {
-                    topBuffer.append(" X ");
-                } else {
-                    topBuffer.append(body);
-                }
-
-                if(grid[i][j].connected(i, j + 1)) {
-                    topBuffer.append(" ");
-                } else {
-                    topBuffer.append(edge);
-                }
-
-                if(grid[i][j].connected(i + 1, j)) {
-                    bottomBuffer.append(body).append("+");
-                }else {
-                    bottomBuffer.append("---").append("+");
-                }
-
-            }
-
-            System.out.println(topBuffer);
-            System.out.println(bottomBuffer);
-
-
-        }
-
     }
 
     public int getRows() {
@@ -171,10 +122,10 @@ public class Maze {
         }
 
         cellBlock.setVisited(true);
-        if(cellBlock.nonVisitedConnections() != 0) {
+        if(cellBlock.nonVisitedConnectionsCount() != 0) {
             path.push(cellBlock);
         } else {
-            while(path.peek().nonVisitedConnections() == 0) {
+            while(path.peek().nonVisitedConnectionsCount() == 0) {
                 path.pop();
             }
         }
@@ -222,5 +173,15 @@ public class Maze {
         }
 
 
+    }
+
+    public CellBlock[][] getGrid() {
+        return Arrays.stream(grid)
+                .map((CellBlock[] row) -> row.clone())
+                .toArray(value -> new CellBlock[value][]);
+    }
+
+    public Deque<CellBlock> getPath() {
+        return path;
     }
 }
