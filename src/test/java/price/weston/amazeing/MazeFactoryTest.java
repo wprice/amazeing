@@ -19,6 +19,7 @@ public class MazeFactoryTest {
     public void setUp() {
         logger.info("init");
     }
+
     @Test
     public void testMazeFactory() {
         Maze maze = MazeFactory.createMaze();

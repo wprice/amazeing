@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
  *
  * @see Maze
  *
- *
  */
 public class CellBlock {
 

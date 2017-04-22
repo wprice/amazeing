@@ -2,7 +2,10 @@ package price.weston.amazeing;
 
 
 /**
- * Created by wprice on 4/21/17.
+ * Provide maze construction via factory.
+ *
+ * @see Maze
+ * @see CellBlock
  */
 public class MazeFactory {
 
@@ -18,8 +21,8 @@ public class MazeFactory {
        return createMaze(DEFAULT_ROWS, DEFAULT_COLUMNS, DEFAULT_ENTRANCE, DEFAULT_EXIT, generationStrategy);
     }
 
-    public static Maze createMaze(int rows, int columns, CellBlock entrance, CellBlock exit, MazeGenerationStrategy generationStrategy) {
-        Maze maze = new Maze(rows, columns, entrance, exit);
+    public static Maze createMaze(int rows, int columns, final CellBlock entrance, final CellBlock exit, MazeGenerationStrategy generationStrategy) {
+        Maze maze = new Maze(rows, columns);
         return maze;
     }
 }
