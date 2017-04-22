@@ -14,5 +14,23 @@ cd amazeing
 mvn install   
 ````
 
-The above command will compile, run the unit tests and install the application.
+The above command will compile, run the unit tests and install the application. 
+Similarly, the repository contains a Main class allowing execution through maven once the repository 
+above has been cloned and at least compiled
+ 
+````
+mvn compile exec:java
+    
+````
 
+Finally, the project is also packaged as a fat Jar (dependencies) and can be executed as such
+
+```bash
+
+mvn package
+java -jar ./target/amazeing-<VERSION>-jar-with-dependencies.jar 
+```
+
+Docker
+---
+TODO
