@@ -25,10 +25,13 @@ public class MazeTest {
 
     @Test
     public void testMazeInit() {
-        Maze m = new Maze(10, 10);
-        assertThat(m, notNullValue());
-        assertThat(m.getEntrance(), notNullValue());
-        assertThat(m.getExit(), notNullValue());
+        Maze maze = new Maze(10, 10);
+
+        assertThat(maze, notNullValue());
+        assertThat(maze.getEntrance(), notNullValue());
+        assertThat(maze.getExit(), notNullValue());
+        assertThat(maze.getRows(), equalTo(10));
+        assertThat(maze.getColumns(), equalTo(10));
     }
 
     @Test
