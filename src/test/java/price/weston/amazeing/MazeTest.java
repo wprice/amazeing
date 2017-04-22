@@ -3,6 +3,7 @@ package price.weston.amazeing;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Deque;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -25,10 +26,13 @@ public class MazeTest {
 
     @Test
     public void testMazeInit() {
-        Maze m = new Maze(10, 10);
-        assertThat(m, notNullValue());
-        assertThat(m.getEntrance(), notNullValue());
-        assertThat(m.getExit(), notNullValue());
+        Maze maze = new Maze(10, 10);
+
+        assertThat(maze, notNullValue());
+        assertThat(maze.getEntrance(), notNullValue());
+        assertThat(maze.getExit(), notNullValue());
+        assertThat(maze.getRows(), equalTo(10));
+        assertThat(maze.getColumns(), equalTo(10));
     }
 
     @Test
@@ -54,5 +58,22 @@ public class MazeTest {
         System.out.println(Arrays.deepToString(grid));
     }
 
+    @Test
+    public void testPathFormat() {
+        Maze maze = new Maze(4, 4);
+        maze.generateMaze();
+        maze.traverse(new CellBlock(0, 0), new CellBlock(3, 3));
+        Deque<CellBlock> path = maze.getPath();
+        System.out.println(MazeHelper.formatTraversalPath(path));
+
+        System.out.println(MazeHelper.formatTraversalPath(path, false));
+        System.out.println(MazeHelper.formatTraversalPath(path, true));
+
+
+    }
+    @Test
+    public void testGenerationStrategy() {
+
+    }
 
 }

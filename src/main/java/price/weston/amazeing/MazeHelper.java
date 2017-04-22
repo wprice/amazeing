@@ -1,10 +1,14 @@
 package price.weston.amazeing;
 
+import com.google.common.base.Strings;
+import javafx.scene.control.Cell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Deque;
+import java.util.Iterator;
 import java.util.stream.IntStream;
 
 /**
@@ -19,7 +23,6 @@ public class MazeHelper {
     }
 
     public static void dumpMaze(final Maze maze, boolean traversal) {
-//        logger.info(formatMaze(maze, traversal));
         System.out.println(formatMaze(maze, traversal));
     }
 
@@ -75,5 +78,67 @@ public class MazeHelper {
         }
 
         return mazeBuffer.toString();
+    }
+
+    public static CellBlock fromValues(String values) {
+        String[] tokens = values.split(",");
+        return fromValues(Integer.valueOf(tokens[0]), Integer.valueOf(tokens[1]));
+    }
+
+    public static CellBlock fromValues(int rows, int columns) {
+        return new CellBlock(rows, columns);
+    }
+
+    public static String formatTraversalPath(Maze maze, MazeTraversalFormat mazeTraversalFormat) {
+
+        if(mazeTraversalFormat.equals(MazeTraversalFormat.GRID)) {
+            return formatMaze(maze, true);
+        } else if(mazeTraversalFormat.equals(MazeTraversalFormat.LINE)) {
+            return formatTraversalPath(maze.getPath(), false);
+        } else if(mazeTraversalFormat.equals(MazeTraversalFormat.STACK)) {
+            return formatTraversalPath(maze.getPath(), true);
+        } else {
+            return formatMaze(maze, true);
+        }
+
+    }
+    public static String formatTraversalPath(Deque<CellBlock> path) {
+        return formatTraversalPath(path, false);
+    }
+    public static String formatTraversalPath(Deque<CellBlock> path, boolean indent) {
+
+
+        StringBuffer pathFormat = new StringBuffer();
+        int indentCount = 1;
+
+        Iterator<CellBlock> iter = path.descendingIterator();
+
+        while(iter.hasNext()) {
+            CellBlock cellBlock = iter.next();
+            pathFormat.append("(" + cellBlock.getRow() + "," + cellBlock.getColumn() + ")");
+
+            if(indent) {
+
+                pathFormat.append("\n");
+                pathFormat.append(repeatString("\t", indentCount));
+
+                if(iter.hasNext()) {
+                    pathFormat.append("-->");
+                }
+                indentCount += 1;
+
+            } else {
+                if(iter.hasNext()) {
+                    pathFormat.append("-->");
+                }
+            }
+
+        }
+        return pathFormat.toString();
+    }
+
+
+    private static String repeatString(String value, int repeater) {
+        return Strings.repeat(value, repeater);
     }
 }

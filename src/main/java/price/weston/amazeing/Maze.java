@@ -113,10 +113,9 @@ public class Maze {
 
     private CellBlock traverse(CellBlock cellBlock) {
 
-        System.out.println(cellBlock.getRow() + "   " + cellBlock.getColumn());
+        logger.debug("Current cellblock row {} column {}", cellBlock.getRow(), cellBlock.getColumn());
 
         if(cellBlock.equals(exit)) {
-            System.out.println("Maze finished at " + cellBlock);
             path.push(cellBlock);
             return cellBlock;
         }
@@ -152,12 +151,14 @@ public class Maze {
 
 
     private void validateEntrance(final CellBlock entrance) {
+
         if(entrance != null) {
             if(entrance.getRow() < 0) {
                 throw new IllegalArgumentException("Maze entrance row must be greater than zero");
             }
             this.entrance = entrance;
         } else {
+            logger.warn("No maze entrance provided setting to row {} and column {}", 0, 0);
             this.entrance = new CellBlock(0, 0);
         }
     }
@@ -169,6 +170,7 @@ public class Maze {
             }
             this.exit = exit;
         } else {
+            logger.warn("No Maze exit provided setting to row {} and column {}", rows - 1, columns - 1);
             this.exit = new CellBlock(rows - 1, columns - 1);
         }
 
