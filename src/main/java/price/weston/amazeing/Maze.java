@@ -116,6 +116,13 @@ public class Maze {
         }
     }
 
+    /**
+     * Note, this really provides the core of the Binary Tree logic in that we need to decide whether or not
+     * to go South or East or do nothing at all.
+     *
+     * @param cellBlock
+     * @return
+     */
     private CellBlock getAdjoiningBlock(final CellBlock cellBlock) {
         List<CellBlock> cellBlocks = new ArrayList<>();
 
@@ -169,6 +176,7 @@ public class Maze {
     public void traverse() {
         traverse(entrance, exit);
     }
+
     public void traverse(final CellBlock entrance, final CellBlock exit) {
         validateEntrance(entrance);
         validateExit(exit);
