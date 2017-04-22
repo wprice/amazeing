@@ -1,13 +1,8 @@
 package price.weston.amazeing;
 
-import com.inamik.text.tables.Cell;
 import com.inamik.text.tables.SimpleTable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.stream.Stream;
+import java.util.*;
 
 /**
  * Created by wprice on 4/21/17.
@@ -19,7 +14,7 @@ public class Maze {
     private CellBlock[][] grid;
     private CellBlock entrance;
     private CellBlock exit;
-
+    private Deque<CellBlock> path = new ArrayDeque<>();
     /**
      * Construct a new maze
      * @param rows
@@ -51,9 +46,6 @@ public class Maze {
                 throw new IllegalStateException("Maze entrance and exit cannot be the same");
             }
 
-            if(exit.getColumn() != columns - 1) {
-                throw new IllegalStateException("Maze exit must be in last column");
-            }
             this.exit = exit;
         } else {
             exit = new CellBlock(rows - 1, columns - 1);
@@ -104,8 +96,6 @@ public class Maze {
                     System.out.print("|   ");
                 }
 
-
-
                 if(j == grid[i].length - 1) {
                     System.out.print("|");
                 } else {
@@ -131,10 +121,7 @@ public class Maze {
     }
 
     public void generateMaze(int startRow, int startColumn) {
-
-        CellBlock startBlock = grid[startRow][startColumn];
-        generateMaze(startBlock);
-
+        generateMaze(null);
     }
 
     public void generateMaze(final CellBlock cellBlock) {
@@ -165,5 +152,46 @@ public class Maze {
         return (!cellBlocks.isEmpty()) ? cellBlocks.get(new Random().nextInt(cellBlocks.size())) : null;
     }
 
+    public CellBlock getEntrance() {
+        return entrance;
+    }
+
+    public CellBlock getExit() {
+        return exit;
+    }
+
+    public CellBlock traverse(CellBlock cellBlock) {
+
+        System.out.println(cellBlock.getRow() + "   " + cellBlock.getColumn());
+
+        if(cellBlock.equals(exit)) {
+            System.out.println("Maze finished at " + cellBlock);
+            path.push(cellBlock);
+            return cellBlock;
+        }
+
+        cellBlock.setVisited(true);
+        if(cellBlock.nonVisitedConnections() != 0) {
+            path.push(cellBlock);
+        } else {
+            while(path.peek().nonVisitedConnections() == 0) {
+                path.pop();
+            }
+        }
+
+        for (CellBlock connection : cellBlock.getConnections()) {
+            if(!connection.isVisited()) {
+                traverse(connection);
+            }
+        }
+
+       return cellBlock;
+    }
+    public void traverse() {
+        path.clear();
+        CellBlock entrance = grid[getEntrance().getRow()][getEntrance().getColumn()];
+        traverse(entrance);
+        System.out.println(path);
+    }
 
 }

@@ -1,11 +1,14 @@
 package price.weston.amazeing;
 
-import javafx.scene.control.Cell;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * CellBlock represents a single cell or 'block' of a maze. Note, the play on words :-)
@@ -21,11 +24,12 @@ public class CellBlock {
     private Set<CellBlock> connections = new HashSet<>();
     private boolean entrance;
     private boolean exit;
+    private boolean visited;
 
     public CellBlock(int row, int column) {
         this.row = row;
         this.column = column;
-
+        ReflectionToStringBuilder.setDefaultStyle(ToStringStyle.NO_CLASS_NAME_STYLE);
     }
 
     public int getRow() {
@@ -51,6 +55,9 @@ public class CellBlock {
     public Set<CellBlock> getConnections() {
         return this.connections;
     }
+    public List<CellBlock> getNonVisitedConnections() {
+        return connections.stream().filter(cellBlock -> !cellBlock.isVisited()).collect(Collectors.toList());
+    }
 
     public boolean isEntrance() {
         return entrance;
@@ -68,6 +75,14 @@ public class CellBlock {
         this.exit = exit;
     }
 
+    public boolean isVisited() {
+        return visited;
+    }
+
+    public void setVisited(boolean visited) {
+        this.visited = visited;
+    }
+
     /**
      * Note, we exclude the connections field from the equals method as only our coordinates matter
      */
@@ -83,7 +98,11 @@ public class CellBlock {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return ReflectionToStringBuilder.toStringExclude(this, "connections");
     }
 
+    public int nonVisitedConnections() {
+        int count = connections.stream().filter(cellBlock -> !cellBlock.isVisited()).collect(Collectors.toList()).size();
+        return count;
+    }
 }

@@ -19,7 +19,7 @@ public class MazeFactory {
     }
 
     public static Maze createMaze(int rows, int columns, CellBlock entrance, CellBlock exit, MazeGenerationStrategy generationStrategy) {
-        Maze maze = new Maze(rows, columns);
+        Maze maze = new Maze(rows, columns, entrance, exit);
         return maze;
     }
 }
