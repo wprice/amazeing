@@ -33,7 +33,7 @@ public class MazeTest {
     public void testCreateMaze() {
         Maze m = new Maze(4, 4);
         m.generateMaze();
-        m.traverse();
+        m.dumpMaze();
     }
 
     @Test
@@ -41,6 +41,7 @@ public class MazeTest {
         Maze m = new Maze(4, 4);
         m.generateMaze();
         m.traverse(new CellBlock(0, 0), new CellBlock(3, 3));
+        m.dumpMaze();
     }
 
 }

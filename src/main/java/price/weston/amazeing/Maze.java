@@ -64,34 +64,49 @@ public class Maze {
     //TODO actually do something reasonable for printing the maze etc
     public void dumpMaze() {
 
-        SimpleTable table = SimpleTable.of();
+        String edge = "|";
+        String body = "   ";
+        String bottom = "+";
 
+        StringBuffer header = new StringBuffer("+");
         for(int i = 0; i < grid.length; i++) {
-           System.out.print("---" + "\t");
+          header.append("---+");
         }
-        System.out.println();
+        System.out.println(header);
 
         for (int i = 0; i < grid.length; i++) {
 
+            StringBuffer topBuffer = new StringBuffer("|");
+            StringBuffer bottomBuffer = new StringBuffer("+");
+
             for (int j = 0; j < grid[i].length; j++) {
-                if(j == 0) {
-                    System.out.print("|   ");
-                }
 
-                if(j == grid[i].length - 1) {
-                    System.out.print("|");
+                if(path.contains(grid[i][j])) {
+                    topBuffer.append(" X ");
                 } else {
-                    System.out.print("   ");
+                    topBuffer.append(body);
                 }
 
+                if(grid[i][j].connected(i, j + 1)) {
+                    topBuffer.append(" ");
+                } else {
+                    topBuffer.append(edge);
+                }
+
+                if(grid[i][j].connected(i + 1, j)) {
+                    bottomBuffer.append(body).append("+");
+                }else {
+                    bottomBuffer.append("---").append("+");
+                }
 
             }
-            System.out.println();
+
+            System.out.println(topBuffer);
+            System.out.println(bottomBuffer);
+
+
         }
 
-        for(int i = 0; i < grid.length; i++) {
-            System.out.print("---" + "\t");
-        }
     }
 
     public int getRows() {
@@ -116,6 +131,13 @@ public class Maze {
         }
     }
 
+    /**
+     * Note, this really provides the core of the Binary Tree logic in that we need to decide whether or not
+     * to go South or East or do nothing at all.
+     *
+     * @param cellBlock
+     * @return
+     */
     private CellBlock getAdjoiningBlock(final CellBlock cellBlock) {
         List<CellBlock> cellBlocks = new ArrayList<>();
 
@@ -169,6 +191,7 @@ public class Maze {
     public void traverse() {
         traverse(entrance, exit);
     }
+
     public void traverse(final CellBlock entrance, final CellBlock exit) {
         validateEntrance(entrance);
         validateExit(exit);

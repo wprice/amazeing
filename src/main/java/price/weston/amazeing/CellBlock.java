@@ -48,9 +48,13 @@ public class CellBlock {
 
     }
 
+    public boolean connected(int row, int column) {
+        return connected(new CellBlock(row, column));
+    }
     public boolean connected(final CellBlock cellBlock) {
         return (cellBlock != null) ? connections.contains(cellBlock) : false;
     }
+
     public Set<CellBlock> getConnections() {
         return this.connections;
     }
@@ -87,7 +91,17 @@ public class CellBlock {
      */
     @Override
     public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj, "connections");
+
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof CellBlock)) {
+            return false;
+        }
+
+        CellBlock other = (CellBlock) obj;
+        return getRow() == other.getRow() && getColumn() == other.getColumn();
     }
 
     @Override
