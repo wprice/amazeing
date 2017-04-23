@@ -1,15 +1,11 @@
 package price.weston.amazeing;
 
 import com.google.common.base.Strings;
-import javafx.scene.control.Cell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Deque;
 import java.util.Iterator;
-import java.util.stream.IntStream;
 
 /**
  * Utility class for Maze formatting, etc
