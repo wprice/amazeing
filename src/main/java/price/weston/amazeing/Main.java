@@ -22,6 +22,7 @@ public class Main {
         Option format = Option.builder("format").desc("the format for traversal output valid values are [grid, line, stack]").hasArg(true).type(String.class).build();
         Option travdir = Option.builder("travdir").desc("direction of traversal format [entrance, exit]").hasArg(true).type(String.class).build();
         Option help = Option.builder("help").hasArg(false).longOpt("help").desc("print options and help description").build();
+        Option mazeType = Option.builder("ma").hasArg(true).desc("the type of algorithm used to generate the maze [binary_tree, sidewinder]").type(String.class).build();
 
         options.addOption(rows);
         options.addOption(columns);
@@ -29,6 +30,7 @@ public class Main {
         options.addOption(end);
         options.addOption(format);
         options.addOption(travdir);
+        options.addOption(mazeType);
         options.addOption(help);
 
         return options;
@@ -38,8 +40,8 @@ public class Main {
         Options options = null;
         CommandLineParser parser = null;
         CommandLine commandLine = null;
-        int rows = -1;
-        int columns = - 1;
+        int rows = 3;
+        int columns = 3;
         Maze maze = null;
         CellBlock start = null;
         CellBlock end = null;
@@ -63,13 +65,20 @@ public class Main {
                 columns = Integer.valueOf(commandLine.getOptionValue("c"));
             }
 
-            maze = MazeFactory.createMaze(rows, columns);
+            CellBlock[][] grid = MazeHelper.populateGrid(rows, columns);
             System.out.println();
             System.out.println("Grid created: \n");
-            System.out.println(MazeHelper.formatMaze(maze));
+            System.out.println(MazeHelper.formatMaze(grid, null, false));
 
-            maze.generateMaze();
+            MazeGenerationStrategy generationStrategy = MazeGenerationStrategy.BINARY_TREE;
 
+            if(commandLine.hasOption("ma")) {
+                generationStrategy = MazeGenerationStrategy.valueOf(commandLine.getOptionValue("ma").toUpperCase());
+            }
+
+            logger.info("Generating maze with {} algorithm", generationStrategy);
+            MazeGenerator mazeGenerator = MazeGeneratorFactory.getMazeGenerator(generationStrategy);
+            maze = mazeGenerator.generate(grid);
             System.out.println();
             System.out.println("Maze generated: \n");
             System.out.println(MazeHelper.formatMaze(maze));

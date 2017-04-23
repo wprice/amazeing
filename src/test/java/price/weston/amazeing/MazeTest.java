@@ -72,9 +72,10 @@ public class MazeTest {
 
 
     }
-    @Test
-    public void testGenerationStrategy() {
 
+    @Test
+    public void testPopulateGrid() {
+        System.out.println(Arrays.deepToString(MazeHelper.populateGrid(3, 3)));
     }
 
 }

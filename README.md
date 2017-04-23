@@ -1,8 +1,12 @@
 Amazeing Example
 ----
-A simple application demonstrating a maze generation and traversal. The maze 
-generation algorithm used is the Binary Tree algorithm (South and East), and
-the traversal algorithm is a variation of Tremaux.
+A simple application demonstrating a maze generation and traversal. Two maze generation
+algorithms are provided:
+
+- Binary Tree
+- Sidewinder
+
+The traversal algorithm is a variation of Tremaux and descent first traversal.
 
 A maze takes varying forms through program execution
 
@@ -66,6 +70,8 @@ usage: amazeing
  -format <arg>        the format for traversal output valid values are
                       [grid, line, stack]
  -help,--help         print options and help description
+ -ma <arg>            the type of algorithm used to generate the maze
+                      [binary_tree, sidewinder]
  -r,--rows <arg>      the number of rows to create
  -start <arg>         the entrance for maze traversal
  -travdir <arg>       direction of traversal format [entrance, exit]

@@ -38,26 +38,20 @@ public class Maze {
         }
         this.rows = rows;
         this.columns = columns;
-        this.grid = new CellBlock[rows][columns];
-
-
-        init();
-
-    }
-
-    public CellBlock getCell(int row, int column) {
-        return grid[row][column];
-    }
-
-    private void init() {
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++) {
-                grid[i][j] = new CellBlock(i, j);
-            }
-        }
-
+        this.grid = MazeHelper.populateGrid(rows, columns);
         entrance = new CellBlock(0, 0);
         exit = new CellBlock(rows - 1, columns - 1);
+
+    }
+
+    public Maze(CellBlock[][] grid) {
+        this.rows = grid.length;
+        this.columns = grid[0].length;
+        this.grid = grid;
+
+    }
+    public CellBlock getCell(int row, int column) {
+        return grid[row][column];
     }
 
     public int getRows() {
