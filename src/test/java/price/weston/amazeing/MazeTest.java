@@ -66,8 +66,8 @@ public class MazeTest {
         Deque<CellBlock> path = maze.getPath();
         System.out.println(MazeHelper.formatTraversalPath(path));
 
-        System.out.println(MazeHelper.formatTraversalPath(path, false));
-        System.out.println(MazeHelper.formatTraversalPath(path, true));
+        System.out.println(MazeHelper.formatTraversalPath(path, false, MazeTraversalFormatDirection.DESCENDING));
+        System.out.println(MazeHelper.formatTraversalPath(path, true, MazeTraversalFormatDirection.ACENDING));
 
 
     }

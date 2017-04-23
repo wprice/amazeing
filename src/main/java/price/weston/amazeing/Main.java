@@ -4,6 +4,8 @@ import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.management.OperatingSystemMXBean;
+
 
 /**
  * Created by wprice on 4/22/17.
@@ -15,18 +17,20 @@ public class Main {
     private static Options createOptions() {
         Options options = new Options();
 
-        Option rows = Option.builder("r").hasArg(true).longOpt("rows").type(Integer.class).build();
-        Option columns = Option.builder("c").hasArg(true).longOpt("columns").type(Integer.class).build();
-        Option start = Option.builder("start").hasArg(true).type(String.class).build();
-        Option end = Option.builder("end").hasArg(true).type(String.class).build();
-        Option format = Option.builder("format").hasArg(true).type(String.class).build();
-        Option help = Option.builder("help").hasArg(false).longOpt("help").build();
+        Option rows = Option.builder("r").hasArg(true).longOpt("rows").type(Integer.class).desc("the number of rows to create").build();
+        Option columns = Option.builder("c").hasArg(true).longOpt("columns").desc("the number of columns to create").type(Integer.class).build();
+        Option start = Option.builder("start").hasArg(true).desc("the entrance for maze traversal").type(String.class).build();
+        Option end = Option.builder("end").hasArg(true).desc("the exit for maze traversal").type(String.class).build();
+        Option format = Option.builder("format").desc("the format for traversal output valid values are [grid, line, stack]").hasArg(true).type(String.class).build();
+        Option travdir = Option.builder("travdir").desc("direction of traversal format [entrance, exit]").hasArg(true).type(String.class).build();
+        Option help = Option.builder("help").hasArg(false).longOpt("help").desc("print options and help description").build();
 
         options.addOption(rows);
         options.addOption(columns);
         options.addOption(start);
         options.addOption(end);
         options.addOption(format);
+        options.addOption(travdir);
         options.addOption(help);
 
         return options;
@@ -89,7 +93,14 @@ public class Main {
 
             System.out.println();
             System.out.println("Maze traversed: \n");
-            System.out.println(MazeHelper.formatTraversalPath(maze, format));
+
+            MazeTraversalFormatDirection direction = MazeTraversalFormatDirection.DESCENDING;
+
+            if(commandLine.hasOption("travdir")) {
+                direction = (commandLine.getOptionValue("travdir").equalsIgnoreCase("entrance"))
+                        ? MazeTraversalFormatDirection.DESCENDING : MazeTraversalFormatDirection.ACENDING;
+            }
+            System.out.println(MazeHelper.formatTraversalPath(maze, format, direction));
 
 
         }catch(Exception e) {

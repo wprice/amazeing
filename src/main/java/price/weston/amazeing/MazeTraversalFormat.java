@@ -1,7 +1,8 @@
 package price.weston.amazeing;
 
 /**
- * Created by wprice on 4/22/17.
+ * Simple enum for traversal format
+ *
  */
 public enum  MazeTraversalFormat {
     GRID,
