@@ -27,6 +27,7 @@ public class MazeFactory {
     public static Maze createMaze(int rows, int columns) {
         return createMaze(rows, columns, MazeGenerationStrategy.BINARY_TREE);
     }
+
     public static Maze createMaze(int rows, int columns, MazeGenerationStrategy generationStrategy) {
 
         if(rows < 0 || columns < 0) {
@@ -35,7 +36,7 @@ public class MazeFactory {
             columns = DEFAULT_COLUMNS;
         }
 
-        Maze maze = new Maze(rows, columns);
-        return maze;
+        MazeGenerator generator = MazeGeneratorFactory.getMazeGenerator(generationStrategy);
+        return generator.generate(rows, columns);
     }
 }

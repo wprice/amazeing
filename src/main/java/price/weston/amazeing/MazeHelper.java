@@ -5,6 +5,7 @@ import javafx.scene.control.Cell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.stream.IntStream;
@@ -180,5 +181,11 @@ public class MazeHelper {
         }
 
         return false;
+    }
+
+    public static CellBlock[][] copy(final CellBlock[][] grid) {
+        return Arrays.stream(grid)
+                .map((CellBlock[] row) -> row.clone())
+                .toArray(value -> new CellBlock[value][]);
     }
 }
