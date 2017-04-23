@@ -4,8 +4,6 @@ import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.management.OperatingSystemMXBean;
-
 
 /**
  * Created by wprice on 4/22/17.

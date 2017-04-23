@@ -93,5 +93,21 @@ More examples are recorded in the following locations
 
 Note, due to the limitations of Markdown, it is recommended you view the above links in your text editor of choice
 
+Docker
+---
 
+A simple docker image is maintained on [Docker Hub](https://github.com/) for convenience
+
+```text
+docker pull wmprice1240/amazeing
+
+```
+
+Program options are supported and can be used in conjunction with simply running the program:
+
+```text
+docker run wmprice1240/amazeing -format stack
+```
+
+The Docker image is updated as part of the Travis CI build provided by [GitHub](https://github.com/)
 

@@ -6,7 +6,8 @@ import java.util.Arrays;
 import java.util.Deque;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 
 /**
  * Created by wprice on 4/21/17.
