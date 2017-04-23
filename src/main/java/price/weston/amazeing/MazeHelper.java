@@ -12,7 +12,8 @@ import java.util.Iterator;
 import java.util.stream.IntStream;
 
 /**
- * Created by wprice on 4/21/17.
+ * Utility class for Maze formatting, etc
+ *
  */
 public class MazeHelper {
 
@@ -89,29 +90,45 @@ public class MazeHelper {
         return new CellBlock(rows, columns);
     }
 
+    public static String formatTraversalPath(final Maze maze, MazeTraversalFormat mazeTraversalFormat, MazeTraversalFormatDirection direction) {
+        if(mazeTraversalFormat.equals(MazeTraversalFormat.GRID)) {
+            return formatMaze(maze, true);
+        } else if(mazeTraversalFormat.equals(MazeTraversalFormat.LINE)) {
+            return formatTraversalPath(maze.getPath(), false, direction);
+        } else if(mazeTraversalFormat.equals(MazeTraversalFormat.STACK)) {
+            return formatTraversalPath(maze.getPath(), true, direction);
+        } else {
+            return formatMaze(maze, true);
+        }
+    }
+
+    public static String formatTraversalPath(Maze maze) {
+        return formatTraversalPath(maze, MazeTraversalFormat.GRID);
+    }
+
     public static String formatTraversalPath(Maze maze, MazeTraversalFormat mazeTraversalFormat) {
 
         if(mazeTraversalFormat.equals(MazeTraversalFormat.GRID)) {
             return formatMaze(maze, true);
         } else if(mazeTraversalFormat.equals(MazeTraversalFormat.LINE)) {
-            return formatTraversalPath(maze.getPath(), false);
+            return formatTraversalPath(maze.getPath(), false, MazeTraversalFormatDirection.DESCENDING);
         } else if(mazeTraversalFormat.equals(MazeTraversalFormat.STACK)) {
-            return formatTraversalPath(maze.getPath(), true);
+            return formatTraversalPath(maze.getPath(), true, MazeTraversalFormatDirection.DESCENDING);
         } else {
             return formatMaze(maze, true);
         }
 
     }
     public static String formatTraversalPath(Deque<CellBlock> path) {
-        return formatTraversalPath(path, false);
+        return formatTraversalPath(path, false, MazeTraversalFormatDirection.DESCENDING);
     }
-    public static String formatTraversalPath(Deque<CellBlock> path, boolean indent) {
+    public static String formatTraversalPath(Deque<CellBlock> path, boolean indent, MazeTraversalFormatDirection direction) {
 
 
         StringBuffer pathFormat = new StringBuffer();
         int indentCount = 1;
 
-        Iterator<CellBlock> iter = path.descendingIterator();
+        Iterator<CellBlock> iter = (direction.equals(MazeTraversalFormatDirection.DESCENDING)) ? path.descendingIterator() : path.iterator();
 
         while(iter.hasNext()) {
             CellBlock cellBlock = iter.next();
