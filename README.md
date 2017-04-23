@@ -91,7 +91,6 @@ More examples are recorded in the following locations
 - [line](./doc/line-traversal.txt)
 - [stack](./doc/stack-traversal.txt)
 
-Note, due to the limitations of Markdown, it is recommended you view the above links in your text editor of choice
 
 Docker
 ---
