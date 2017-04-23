@@ -105,7 +105,7 @@ public class Main {
 
             if(commandLine.hasOption("travdir")) {
                 direction = (commandLine.getOptionValue("travdir").equalsIgnoreCase("entrance"))
-                        ? MazeTraversalFormatDirection.DESCENDING : MazeTraversalFormatDirection.ACENDING;
+                        ? MazeTraversalFormatDirection.DESCENDING : MazeTraversalFormatDirection.ASCENDING;
             }
             System.out.println(MazeHelper.formatTraversalPath(maze, format, direction));
 

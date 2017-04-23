@@ -1,13 +1,11 @@
 package price.weston.amazeing;
 
 /**
- * Created by wprice on 4/23/17.
+ * Simple enum to model compass points
  */
 public enum Compass {
-
     NORTH,
     SOUTH,
     EAST,
     WEST;
-
 }

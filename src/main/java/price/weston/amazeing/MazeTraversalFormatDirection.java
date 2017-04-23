@@ -5,5 +5,5 @@ package price.weston.amazeing;
  */
 public enum  MazeTraversalFormatDirection {
     DESCENDING,
-    ACENDING;
+    ASCENDING;
 }

@@ -1,5 +1,10 @@
 package price.weston.amazeing;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.notNullValue;
+
 import org.junit.Test;
 
 /**
@@ -7,6 +12,30 @@ import org.junit.Test;
  */
 public class MazeGeneratorTest {
 
+    @Test
+    public void testMazeGeneratorFactory() {
+
+        MazeGenerator generator = MazeGeneratorFactory.getMazeGenerator(MazeGenerationStrategy.BINARY_TREE);
+        assertThat(generator, notNullValue());
+        assertThat(generator, instanceOf(MazeGenerator.class));
+        assertThat(generator, instanceOf(BinaryTreeMazeGenerator.class));
+
+        generator = MazeGeneratorFactory.getMazeGenerator("");
+        assertThat(generator, notNullValue());
+        assertThat(generator, instanceOf(MazeGenerator.class));
+        assertThat(generator, instanceOf(BinaryTreeMazeGenerator.class));
+
+        generator = MazeGeneratorFactory.getMazeGenerator("binary_tree");
+        assertThat(generator, notNullValue());
+        assertThat(generator, instanceOf(MazeGenerator.class));
+        assertThat(generator, instanceOf(BinaryTreeMazeGenerator.class));
+
+        generator = MazeGeneratorFactory.getMazeGenerator(MazeGenerationStrategy.SIDEWINDER);
+        assertThat(generator, notNullValue());
+        assertThat(generator, instanceOf(MazeGenerator.class));
+        assertThat(generator, instanceOf(SidewinderMazeGenerator.class));
+
+    }
     @Test
     public void testBinaryTree() {
         BinaryTreeMazeGenerator bt = new BinaryTreeMazeGenerator();

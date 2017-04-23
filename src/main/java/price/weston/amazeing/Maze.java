@@ -48,7 +48,6 @@ public class Maze {
         this.rows = grid.length;
         this.columns = grid[0].length;
         this.grid = grid;
-
     }
     public CellBlock getCell(int row, int column) {
         return grid[row][column];
@@ -62,40 +61,6 @@ public class Maze {
         return columns;
     }
 
-    public void generateMaze() {
-
-        for(int i = 0; i < grid.length; i++) {
-            for(int j = 0; j < grid[i].length; j++) {
-                CellBlock cb = grid[i][j];
-                CellBlock connection = getAdjoiningBlock(cb);
-                if(connection != null) {
-                    cb.addConnection(connection);
-                }
-
-            }
-        }
-    }
-
-    /**
-     * Note, this really provides the core of the Binary Tree logic in that we need to decide whether or not
-     * to go South or East or do nothing at all.
-     *
-     * @param cellBlock
-     * @return
-     */
-    private CellBlock getAdjoiningBlock(final CellBlock cellBlock) {
-        List<CellBlock> cellBlocks = new ArrayList<>();
-
-        if(!(cellBlock.getRow() + 1 > grid.length - 1)) {
-            cellBlocks.add(grid[cellBlock.getRow() + 1][cellBlock.getColumn()]);
-        }
-
-        if(!(cellBlock.getColumn() + 1 > grid[cellBlock.getRow()].length - 1)) {
-            cellBlocks.add(grid[cellBlock.getRow()][cellBlock.getColumn() + 1]);
-        }
-
-        return (!cellBlocks.isEmpty()) ? cellBlocks.get(new Random().nextInt(cellBlocks.size())) : null;
-    }
 
     public CellBlock getEntrance() {
         return entrance;
@@ -106,8 +71,6 @@ public class Maze {
     }
 
     private CellBlock traverse(CellBlock cellBlock) {
-
-        logger.debug("Current cellblock row {} column {}", cellBlock.getRow(), cellBlock.getColumn());
 
         if(cellBlock.equals(exit)) {
             path.push(cellBlock);
@@ -171,13 +134,11 @@ public class Maze {
 
     }
 
-    public CellBlock[][] getGrid() {
-        return Arrays.stream(grid)
-                .map((CellBlock[] row) -> row.clone())
-                .toArray(value -> new CellBlock[value][]);
-    }
-
     public Deque<CellBlock> getPath() {
         return path;
+    }
+
+    public CellBlock[][] getGrid() {
+        return MazeHelper.copy(grid);
     }
 }
