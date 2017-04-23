@@ -1,11 +1,13 @@
 package price.weston.amazeing;
 
 import com.google.common.base.Strings;
+import javafx.scene.control.Cell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Deque;
 import java.util.Iterator;
+import java.util.stream.IntStream;
 
 /**
  * Utility class for Maze formatting, etc
@@ -27,10 +29,8 @@ public class MazeHelper {
         return formatMaze(maze, false);
     }
 
-    public static String formatMaze(final Maze maze, boolean traversal) {
+    public static String formatMaze(final CellBlock[][] grid, final Deque<CellBlock> path, boolean traversal) {
 
-        CellBlock[][] grid = maze.getGrid();
-        Deque<CellBlock> path = maze.getPath();
         StringBuffer mazeBuffer = new StringBuffer();
 
         String edge = "|";
@@ -51,7 +51,7 @@ public class MazeHelper {
 
             for (int j = 0; j < grid[i].length; j++) {
 
-                if(path.contains(grid[i][j]) && traversal) {
+                if(traversal && path.contains(grid[i][j])) {
                     topBuffer.append(" X ");
                 } else {
                     topBuffer.append(body);
@@ -75,6 +75,9 @@ public class MazeHelper {
         }
 
         return mazeBuffer.toString();
+    }
+    public static String formatMaze(final Maze maze, boolean traversal) {
+       return formatMaze(maze.getGrid(), maze.getPath(), traversal);
     }
 
     public static CellBlock fromValues(String values) {
@@ -153,5 +156,29 @@ public class MazeHelper {
 
     private static String repeatString(String value, int repeater) {
         return Strings.repeat(value, repeater);
+    }
+
+    public static CellBlock[][] populateGrid(int rows, int columns) {
+
+        return IntStream.range(0, rows)
+                        .mapToObj(x -> IntStream.range(0, columns)
+                                .mapToObj(y -> new CellBlock(x, y))
+                                .toArray(CellBlock[]::new))
+                        .toArray(CellBlock[][]::new);
+    }
+
+    public static boolean atBoundary(int row, int column, final CellBlock cellBlock, Compass compass) {
+
+        if(compass.equals(Compass.NORTH)) {
+            return cellBlock.getRow() - 1 < 0;
+        } else if(compass.equals(Compass.SOUTH)) {
+            return cellBlock.getRow() + 1 > row;
+        } else if(compass.equals(Compass.EAST)) {
+            return cellBlock.getColumn() + 1 > column;
+        } else if(compass.equals(Compass.WEST)) {
+            return cellBlock.getColumn() - 1 < column;
+        }
+
+        return false;
     }
 }

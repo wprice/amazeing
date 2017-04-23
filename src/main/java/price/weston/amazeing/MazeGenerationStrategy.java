@@ -5,5 +5,6 @@ package price.weston.amazeing;
  */
 public enum  MazeGenerationStrategy {
     BINARY_TREE,
+    SIDEWINDER,
     UNKNOWN;
 }
