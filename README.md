@@ -95,7 +95,7 @@ More examples are recorded in the following locations
 Docker
 ---
 
-A simple docker image is maintained on [Docker Hub](https://github.com/) for convenience
+A simple docker image is maintained on [Docker Hub](https://hub.docker.com/) for convenience
 
 ```text
 docker pull wmprice1240/amazeing
