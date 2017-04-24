@@ -43,9 +43,9 @@ public class CellBlock {
     }
 
     public boolean connected(int row, int column) {
-        return connected(new CellBlock(row, column));
+        return connectedTo(new CellBlock(row, column));
     }
-    public boolean connected(final CellBlock cellBlock) {
+    public boolean connectedTo(final CellBlock cellBlock) {
         return (cellBlock != null) ? connections.contains(cellBlock) : false;
     }
 

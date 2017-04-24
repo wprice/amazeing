@@ -48,7 +48,4 @@ public class MazeTest {
         maze.traverse(new CellBlock(0, 0), new CellBlock(3, 3));
     }
 
-
-
-
 }
