@@ -42,8 +42,6 @@ public class SidewinderMazeGenerator implements MazeGenerator {
                         runList.clear();
                     }
 
-
-
                 } else {
                     grid[i][j].addConnection(grid[i][j + 1]);
                 }
