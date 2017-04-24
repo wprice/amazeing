@@ -13,7 +13,7 @@ public class MazeGeneratorFactory {
     public static MazeGenerator getMazeGenerator(String type) {
 
         try {
-            return getMazeGenerator(MazeGenerationStrategy.valueOf(type));
+            return getMazeGenerator(MazeGenerationStrategy.valueOf(type.toUpperCase()));
         }catch(Exception e) {
             logger.error(e.getMessage());
         }

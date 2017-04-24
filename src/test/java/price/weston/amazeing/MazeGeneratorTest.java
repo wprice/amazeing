@@ -30,6 +30,11 @@ public class MazeGeneratorTest {
         assertThat(generator, instanceOf(MazeGenerator.class));
         assertThat(generator, instanceOf(BinaryTreeMazeGenerator.class));
 
+        generator = MazeGeneratorFactory.getMazeGenerator("sidewinder");
+        assertThat(generator, notNullValue());
+        assertThat(generator, instanceOf(MazeGenerator.class));
+        assertThat(generator, instanceOf(SidewinderMazeGenerator.class));
+
         generator = MazeGeneratorFactory.getMazeGenerator(MazeGenerationStrategy.SIDEWINDER);
         assertThat(generator, notNullValue());
         assertThat(generator, instanceOf(MazeGenerator.class));
